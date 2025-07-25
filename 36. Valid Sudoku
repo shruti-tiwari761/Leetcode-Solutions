@@ -1,0 +1,74 @@
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        int i;
+        for (i = 0; i < 9; i++) {
+            if (!isValidRow(board[i])) {
+                return false;
+            }
+        }
+        for (i = 0; i < 9; i++) {
+            if (!isValidColumn(board, i)) {
+                return false;
+            }
+        }
+        for (i = 0; i < 9; i += 3) {
+            for (int j = 0; j < 9; j += 3) {
+                if (!isValidCell(board, i, j)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private boolean isValidRow(char[] row) {
+        boolean[] seen = new boolean[10];
+
+        for (int i = 0; i < 9; i++) {
+            if (row[i] != '.') {
+                int num = row[i] - '0';
+                if (seen[num]) {
+                    return false;
+                }
+                seen[num] = true;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean isValidColumn(char[][] board, int j) {
+        boolean[] seen = new boolean[10];
+
+        for (int i = 0; i < 9; i++) {
+            if (board[i][j] != '.') {
+                int num = board[i][j] - '0';
+                if (seen[num]) {
+                    return false;
+                }
+                seen[num] = true;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean isValidCell(char[][] board, int n, int m) {
+        boolean[] seen = new boolean[10];
+
+        for (int i = n; i < n + 3; i++) {
+            for (int j = m; j < m + 3; j++) {
+                if (board[i][j] != '.') {
+                    int num = board[i][j] - '0';
+                    if (seen[num]) {
+                        return false;
+                    }
+                    seen[num] = true;
+                }
+            }
+        }
+
+        return true;
+    }
+}
